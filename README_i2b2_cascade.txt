@@ -1,0 +1,54 @@
+In this project we apply the cascade tagging binary framework to clinical data
+
+Requirements:
+Python 3.8
+Transformers 3.3.1
+Pytorch-transformers 1.0.0
+Pytorch-crf 0.7.2
+Torch 1.4.0
+Tqdm 4.61.0
+
+Usage:
+一.Build train, dev, test data from i2b2 dataset by :
+
+a) 
+Switch to the corresponding directory
+
+././i2b2_data_processing
+
+b) 
+firstly run:
+	data_divide.py, 
+	(I have put the dataset under the same path)
+then run:
+	preprocess.py
+You will get three .txt file
+（Note that the path of the data should be aligned）
+
+二. after got the three .txt files (train.txt, dev.txt, test.txt)
+
+a) move the three .txt files to ././i2b2_cascade/raw_data/i2b2_256_85_85_i2b2_cased
+(I have put three files in there)
+
+b) run as:
+python main.py --mode preprocessing --exp_name i2b2_bert_re
+python main.py --mode train --exp_name i2b2_bert_re 
+
+After training, run:
+python main.py --mode evaluation --exp_name i2b2_bert_re
+to evaluate the effective of the model
+
+三.Noted
+We built several different models and  We store each model in a different file and place it in the same folder
+././i2b2_cascade/lib/models/
+
+You should change some codes in main.py if you want to utilize those models
+
+There is a function called _init_model(), and if you want to utilize other model, 
+Please assign the class name of the corresponding model to the self.model in _init_model()
+
+Please download the pre-trained language model to be used in the model in advance. The reference URL is as follows:
+
+https://github.com/helboukkouri/character-bert.
+
+The last, the way of using Character-BERT needs to modify some code，we wrote a part in the comments, but please refer to the webpage just now for the specific use method
